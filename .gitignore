@@ -1,0 +1,24 @@
+# node modules (paquetes instalados con npm)
+node_modules/
+
+# archivos temporales de npm
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# configuración del sistema
+.DS_Store
+.env
+.env.local
+
+# caché de Babel o Jest
+babel-cache/
+coverage/
+
+# carpeta de salida (si compilas)
+dist/
+build/
+
+# VSCode y editores
+.vscode/
+.idea/
