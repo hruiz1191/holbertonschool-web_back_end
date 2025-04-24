@@ -4,6 +4,7 @@ Module 7-to_kv
 This module provides a function to return a tuple with a string and a squared number.
 """
 
+
 from typing import Union, Tuple
 
 
