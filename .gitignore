@@ -1,24 +1,70 @@
-# node modules (paquetes instalados con npm)
-node_modules/
+# =====================
+# Python
+# =====================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.log
+*.sqlite3
+*.db
+*.egg
+*.egg-info/
+*.env
+*.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
 
-# archivos temporales de npm
+# Archivos de entorno virtual
+.venv/
+pip-log.txt
+
+# Archivos de pruebas
+.coverage
+.tox/
+.nox/
+.cache/
+pytest_cache/
+
+# Archivos de herramientas
+mypy_cache/
+.pytest_cache/
+.dmypy.json
+.pyre/
+
+# =====================
+# Node.js
+# =====================
+node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+package-lock.json
+pnpm-lock.yaml
+bun.lockb
 
-# configuración del sistema
-.DS_Store
+# =====================
+# Archivos de entorno / secretos
+# =====================
 .env
 .env.local
+.env.*.local
 
-# caché de Babel o Jest
-babel-cache/
-coverage/
-
-# carpeta de salida (si compilas)
+# =====================
+# Carpeta de salida / compilación
+# =====================
 dist/
 build/
+coverage/
+babel-cache/
 
-# VSCode y editores
+# =====================
+# Configuración de editores
+# =====================
 .vscode/
 .idea/
+.DS_Store
+Thumbs.db
