@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 Module 7-to_kv
-This module provides a function to return a tuple with a string and a squared number.
+This module provides a function to return a tuple
+with a string and a squared number.
 """
 
 
