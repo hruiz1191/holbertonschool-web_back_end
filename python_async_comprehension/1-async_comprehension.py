@@ -1,16 +1,12 @@
 #!/usr/bin/env python3
 import asyncio
-import time
+import random
 
-async def measure_runtime():
-    start_time = time.perf_counter()
+async_generator = __import__('0-async_generator').async_generator
 
-    await asyncio.gather(
-        async_comprehension(),
-        async_comprehension(),
-        async_comprehension(),
-        async_comprehension()
-    )
+async def async_comprehension():
+    return [i async for i in async_generator()]
+
 
     end_time = time.perf_counter()
 
