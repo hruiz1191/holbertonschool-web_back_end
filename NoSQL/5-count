@@ -1,0 +1,2 @@
+// muestres solo la cantidad (el número) de documentos
+print(db.school.count())
