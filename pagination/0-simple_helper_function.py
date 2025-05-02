@@ -8,7 +8,7 @@ from typing import Tuple
 
 def index_range(page: int, page_size: int) -> Tuple[int, int]:
     """
-    Calculate the start and end indexes for a given page and page size.
+    Calculate start and end indexes for pagination.
 
     Args:
         page (int): The current page number (1-indexed).
@@ -16,8 +16,9 @@ def index_range(page: int, page_size: int) -> Tuple[int, int]:
 
     Returns:
         Tuple[int, int]: A tuple containing the start index (inclusive)
-                         and the end index (exclusive) for the slice.
+                         and the end index (exclusive).
     """
-    start_index: int = (page - 1) * page_size
-    end_index: int = start_index + page_size
+    start_index = (page - 1) * page_size
+    end_index = start_index + page_size
     return (start_index, end_index)
+
