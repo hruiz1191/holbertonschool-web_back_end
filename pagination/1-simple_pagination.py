@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-"""
-Simple pagination module
-"""
+""" File that contains functions for pagination """
 
 import csv
 from typing import List, Tuple
@@ -9,64 +7,56 @@ from typing import List, Tuple
 
 def index_range(page: int, page_size: int) -> Tuple[int, int]:
     """
-    Calculate the start and end indexes for a pagination slice.
+    Return a tuple containing the start and end indexes for the page.
 
     Args:
-        page (int): Current page number (1-indexed).
-        page_size (int): Number of items per page.
+        page (int): The current page number (1-indexed).
+        page_size (int): The number of items per page.
 
     Returns:
-        Tuple[int, int]: Tuple with start and end indexes.
+        Tuple[int, int]: A tuple of start and end index.
     """
-    start_index = (page - 1) * page_size
-    end_index = start_index + page_size
-    return (start_index, end_index)
+    return (page_size * (page - 1), page * page_size)
 
 
 class Server:
-    """Server class to paginate a database of popular baby names.
-    """
+    """Server class to paginate a database of popular baby names."""
+
     DATA_FILE = "Popular_Baby_Names.csv"
 
     def __init__(self):
         self.__dataset = None
 
-    def dataset(self) -> List[List]:
+    def dataset(self) -> List[List[str]]:
         """
-        Loads and caches dataset from the CSV file.
+        Loads and caches the dataset.
 
         Returns:
-            List[List]: Dataset without the header.
+            List[List[str]]: The dataset without the header row.
         """
         if self.__dataset is None:
             with open(self.DATA_FILE, newline='') as f:
                 reader = csv.reader(f)
                 dataset = [row for row in reader]
-            self.__dataset = dataset[1:]  # Skip header
+            self.__dataset = dataset[1:]  # skip header
 
         return self.__dataset
 
-    def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
+    def get_page(self, page: int = 1, page_size: int = 10) -> List[List[str]]:
         """
-        Returns a specific page of the dataset.
+        Returns a page of the dataset.
 
         Args:
             page (int): The page number (1-indexed).
             page_size (int): Number of items per page.
 
         Returns:
-            List[List]: A list of rows from the dataset.
-
-        Raises:
-            AssertionError: If page or page_size are not valid positive integers.
+            List[List[str]]: The paginated rows of the dataset.
         """
-        assert isinstance(page, int) and page > 0
-        assert isinstance(page_size, int) and page_size > 0
+        assert type(page) is int and page > 0
+        assert type(page_size) is int and page_size > 0
 
-        start_index, end_index = index_range(page, page_size)
-        dataset = self.dataset()
+        data = self.dataset()
+        start, end = index_range(page, page_size)
 
-        if start_index >= len(dataset):
-            return []
-
-        return dataset[start_index:end_index]
+        return data[start:end]
