@@ -1,0 +1,2 @@
+// filtre y muestre solo los documentos en la colección school
+db.school.find({ name: "Holberton school" })
