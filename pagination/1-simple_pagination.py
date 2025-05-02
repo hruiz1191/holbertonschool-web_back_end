@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-""" File that contains functions for pagination """
+""" File that contains functions for pagination with hypermedia metadata """
 
 import csv
-from typing import List, Tuple
+import math
+from typing import List, Tuple, Dict, Any
 
 
 def index_range(page: int, page_size: int) -> Tuple[int, int]:
@@ -38,7 +39,7 @@ class Server:
             with open(self.DATA_FILE, newline='') as f:
                 reader = csv.reader(f)
                 dataset = [row for row in reader]
-            self.__dataset = dataset[1:]  # skip header
+            self.__dataset = dataset[1:]  # Skip header
 
         return self.__dataset
 
@@ -60,3 +61,27 @@ class Server:
         start, end = index_range(page, page_size)
 
         return data[start:end]
+
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict[str, Any]:
+        """
+        Returns a dictionary with hypermedia pagination metadata.
+
+        Args:
+            page (int): The current page number (1-indexed).
+            page_size (int): The number of items per page.
+
+        Returns:
+            Dict[str, Any]: A dictionary containing pagination metadata.
+        """
+        data = self.get_page(page, page_size)
+        total_items = len(self.dataset())
+        total_pages = math.ceil(total_items / page_size)
+
+        return {
+            "page_size": len(data),
+            "page": page,
+            "data": data,
+            "next_page": page + 1 if (page * page_size) < total_items else None,
+            "prev_page": page - 1 if page > 1 else None,
+            "total_pages": total_pages,
+        }
