@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """ File that contains functions for pagination """
 import csv
+import math
 from typing import List, Tuple, Dict
 
 
 def index_range(page: int, page_size: int) -> Tuple:
     """ Function that returns the index and size of a page """
-    return ((page - 1) * page_size, page * page_size)
+    return (((page * page_size) - page_size), (page * page_size))
 
 
 class Server:
@@ -31,20 +32,27 @@ class Server:
         """ Displays the correct amount of items per page """
         assert type(page) is int and page > 0
         assert type(page_size) is int and page_size > 0
-        data = self.dataset()
-        start, end = index_range(page, page_size)
-        return data[start:end]
+        data = Server.dataset(self)
+        pp = index_range(page, page_size)
+        return data[pp[0]:pp[1]]
 
     def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
-        """ Returns page info including hypermedia metadata """
-        data = self.dataset()
-        total_pages = len(data) // page_size + (1 if len(data) % page_size != 0 else 0)
+        """ Displays the page information """
+        data = Server.dataset(self)
+        total_pages = len(data) // page_size
+        next_page = None
+        if page < total_pages:
+            next_page = page + 1
+        prev_page = None
+        if page > 1:
+            prev_page = page - 1
 
-        return {
-            "page_size": len(self.get_page(page, page_size)),
+        page_info = {
+            "page_size": page_size,
             "page": page,
             "data": self.get_page(page, page_size),
-            "next_page": page + 1 if page < total_pages else None,
-            "prev_page": page - 1 if page > 1 else None,
+            "next_page": next_page,
+            "prev_page": prev_page,
             "total_pages": total_pages
         }
+        return page_info
