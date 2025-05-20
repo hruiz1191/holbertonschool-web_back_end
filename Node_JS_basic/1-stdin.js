@@ -9,4 +9,4 @@ process.stdin.on('data', (data) => {
 // Mensaje cuando el proceso termina
 process.on('exit', () => {
   console.log('This important software is now closing');
-});
+});  
