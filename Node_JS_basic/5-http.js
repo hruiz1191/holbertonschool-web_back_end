@@ -9,21 +9,18 @@ const countStudents = (path) => new Promise((resolve, reject) => {
     }
 
     const lines = data.split('\n').filter((line) => line.trim() !== '');
-    const students = lines.slice(1); // remove header
+    const students = lines.slice(1);
     const fields = {};
     let total = 0;
 
     for (const line of students) {
       const parts = line.split(',');
-      if (parts.length < 4) continue; // eslint-disable-line no-continue
+      if (parts.length < 4) continue;
 
       const firstname = parts[0];
       const field = parts[3];
 
-      if (!fields[field]) {
-        fields[field] = [];
-      }
-
+      if (!fields[field]) fields[field] = [];
       fields[field].push(firstname);
       total += 1;
     }
@@ -33,9 +30,11 @@ const countStudents = (path) => new Promise((resolve, reject) => {
       result += `Number of students in ${field}: ${names.length}. List: ${names.join(', ')}\n`;
     }
 
-    resolve(result.slice(0, -1)); // Remove last newline
+    resolve(result.trim());
   });
 });
+
+const database = process.argv[2];
 
 const app = http.createServer((req, res) => {
   res.statusCode = 200;
@@ -43,8 +42,10 @@ const app = http.createServer((req, res) => {
 
   if (req.url === '/') {
     res.end('Hello Holberton School!');
-  } else if (req.url === '/students') {
-    const database = process.argv[2];
+    return;
+  }
+
+  if (req.url === '/students') {
     if (!database) {
       res.end('This is the list of our students\nCannot load the database');
       return;
@@ -55,12 +56,14 @@ const app = http.createServer((req, res) => {
         res.end(`This is the list of our students\n${data}`);
       })
       .catch(() => {
+        res.statusCode = 500;
         res.end('This is the list of our students\nCannot load the database');
       });
-  } else {
-    res.statusCode = 404;
-    res.end('Not Found');
+    return;
   }
+
+  res.statusCode = 404;
+  res.end('Not Found');
 });
 
 app.listen(1245);
