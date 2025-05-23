@@ -1,7 +1,7 @@
-import fs from 'fs';
+const fs = require('fs');
 
-const readDatabase = (filePath) => {
-   return new Promise((resolve, reject) => {
+function readDatabase(path) {
+  return new Promise((resolve, reject) => {
     fs.readFile(path, 'utf8', (err, data) => {
       if (err) {
         reject(Error(err));
