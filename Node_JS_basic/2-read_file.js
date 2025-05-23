@@ -3,7 +3,7 @@ const fs = require('fs');
 function countStudents(path) {
   try {
     const content = fs.readFileSync(path, 'utf8');
-    const lines = content.split('\n').filter(line => line.trim() !== '');
+    const lines = content.split('\n').filter((line) => line.trim() !== ''); // Paréntesis añadidos aquí
 
     if (lines.length <= 1) {
       throw new Error('Cannot load the database');
