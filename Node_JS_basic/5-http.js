@@ -14,16 +14,16 @@ const countStudents = (path) => new Promise((resolve, reject) => {
     let total = 0;
 
     for (const line of students) {
-      const parts = line.split(',');
-      if (parts.length < 4) continue;
-
-      const firstname = parts[0];
-      const field = parts[3];
-
-      if (!fields[field]) fields[field] = [];
-      fields[field].push(firstname);
-      total += 1;
-    }
+        const parts = line.split(',');
+        if (parts.length >= 4) {
+          const firstname = parts[0];
+          const field = parts[3];
+      
+          if (!fields[field]) fields[field] = [];
+          fields[field].push(firstname);
+          total += 1;
+        }
+      } 
 
     let result = `Number of students: ${total}\n`;
     for (const [field, names] of Object.entries(fields)) {
