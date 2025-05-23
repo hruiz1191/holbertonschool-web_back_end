@@ -24,4 +24,3 @@ function readDatabase(filePath) {
 }
 
 export default readDatabase;
-
