@@ -8,7 +8,7 @@ function countStudents(path) {
         return;
       }
 
-      const lines = data.split('\n').filter(line => line.trim() !== '');
+      const lines = data.split('\n').filter((line) => line.trim() !== '');
       const students = lines.slice(1); // remove header
 
       const fields = {};
@@ -16,7 +16,9 @@ function countStudents(path) {
 
       for (const line of students) {
         const parts = line.split(',');
-        if (parts.length < 4) continue;
+        if (parts.length < 4) {
+          continue; // eslint-disable-line no-continue
+        }
 
         const firstname = parts[0];
         const field = parts[3];
@@ -26,7 +28,7 @@ function countStudents(path) {
         }
 
         fields[field].push(firstname);
-        total++;
+        total += 1; // Changed from total++ to satisfy no-plusplus
       }
 
       console.log(`Number of students: ${total}`);
